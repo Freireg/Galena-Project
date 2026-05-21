@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+paho-mqtt
+pyserial
+pynmea2
+httpx
+psutil
+pydantic-settings

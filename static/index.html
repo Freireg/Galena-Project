@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galena Hub</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-left">
+      <span class="logo-text">GALENA</span>
+      <span class="header-sub">sensor hub</span>
+    </div>
+    <div class="header-center" id="clock">--:--:--</div>
+    <div class="header-right">
+      <span class="dot" id="ws-dot"></span>
+      <span id="ws-label">connecting</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left sidebar -->
+    <aside class="sidebar">
+
+      <section class="panel">
+        <h2>Diagnostics</h2>
+        <div class="stat-grid">
+          <div class="stat">
+            <span class="stat-label">CPU</span>
+            <span class="stat-value" id="d-cpu">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Temp</span>
+            <span class="stat-value" id="d-temp">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Memory</span>
+            <span class="stat-value" id="d-mem">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Load</span>
+            <span class="stat-value" id="d-load">--</span>
+          </div>
+          <div class="stat full">
+            <span class="stat-label">Uptime</span>
+            <span class="stat-value" id="d-uptime">--</span>
+          </div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar" id="mem-bar"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>GPS</h2>
+        <div class="stat-grid">
+          <div class="stat full">
+            <span class="stat-label">Latitude</span>
+            <span class="stat-value mono" id="g-lat">--</span>
+          </div>
+          <div class="stat full">
+            <span class="stat-label">Longitude</span>
+            <span class="stat-value mono" id="g-lon">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Altitude</span>
+            <span class="stat-value" id="g-alt">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Speed</span>
+            <span class="stat-value" id="g-spd">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Satellites</span>
+            <span class="stat-value" id="g-sat">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Fix</span>
+            <span class="stat-value" id="g-fix">--</span>
+          </div>
+        </div>
+        <p class="gps-error hidden" id="g-error"></p>
+      </section>
+
+    </aside>
+
+    <!-- Main node grid -->
+    <section class="node-area">
+      <div class="area-header">
+        <h2>Peripheral Nodes</h2>
+        <span class="node-count" id="node-count">0 nodes</span>
+      </div>
+      <div class="node-grid" id="node-grid">
+        <div class="no-nodes" id="no-nodes">Waiting for nodes...</div>
+      </div>
+    </section>
+
+    <!-- Right sidebar -->
+    <aside class="sidebar right">
+      <section class="panel weather-panel">
+        <h2>Weather</h2>
+        <div class="weather-current">
+          <div class="weather-temp" id="w-temp">--</div>
+          <div class="weather-condition" id="w-cond">--</div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat">
+            <span class="stat-label">Wind</span>
+            <span class="stat-value" id="w-wind">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Humidity</span>
+            <span class="stat-value" id="w-hum">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Sunrise</span>
+            <span class="stat-value mono" id="w-rise">--</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Sunset</span>
+            <span class="stat-value mono" id="w-set">--</span>
+          </div>
+        </div>
+        <div class="forecast" id="forecast"></div>
+        <p class="gps-error hidden" id="w-error"></p>
+      </section>
+    </aside>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
