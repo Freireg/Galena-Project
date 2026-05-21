@@ -5,7 +5,7 @@ import httpx
 from hub import state
 from hub.config import settings
 
-_URL = "https://api.open-meteo.com/v1/forecast"
+_URL = "http://api.open-meteo.com/v1/forecast"
 _PARAMS = {
     "current": "temperature_2m,weathercode,windspeed_10m,relativehumidity_2m",
     "daily": "temperature_2m_max,temperature_2m_min,sunrise,sunset,weathercode",
