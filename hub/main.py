@@ -70,6 +70,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Galena Hub", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/resources", StaticFiles(directory="resources"), name="resources")
 
 
 @app.get("/", response_class=HTMLResponse)
