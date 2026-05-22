@@ -84,10 +84,18 @@ header {
 main {
   display: grid;
   grid-template-columns: 230px 1fr 230px;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "left  .     right"
+    "nodes nodes nodes";
   gap: 0;
   flex: 1;
   overflow: hidden;
 }
+
+.sidebar:not(.right) { grid-area: left; }
+.sidebar.right       { grid-area: right; }
+.node-area           { grid-area: nodes; }
 
 /* ── Sidebar ─────────────────────────────────────────────── */
 .sidebar {
@@ -201,7 +209,7 @@ main {
 
 .node-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 10px;
 }
 
@@ -236,7 +244,7 @@ main {
 }
 
 .node-id {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 1px;
@@ -244,7 +252,7 @@ main {
 }
 
 .node-age {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -258,7 +266,7 @@ main {
 }
 
 .field-key {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-muted);
   white-space: nowrap;
   overflow: hidden;
@@ -268,7 +276,7 @@ main {
 
 .field-val {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text);
   font-weight: 600;
   white-space: nowrap;
