@@ -6,7 +6,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from hub import diagnostics, state
+from hub import broker, diagnostics, state
 from hub.config import settings
 from hub.gps import GpsReader
 from hub.mqtt_client import MqttClient
@@ -18,7 +18,7 @@ _weather: WeatherFetcher | None = None
 
 async def _broadcast(payload: dict):
     dead: set[WebSocket] = set()
-    for ws in _clients:
+    for ws in list(_clients):          # snapshot so connect/disconnect mid-send is safe
         try:
             await ws.send_json(payload)
         except Exception:
@@ -28,12 +28,15 @@ async def _broadcast(payload: dict):
 
 async def _broadcast_loop():
     while True:
-        await _broadcast({
-            "nodes": state.nodes,
-            "diagnostics": state.diagnostics,
-            "gps": state.gps,
-            "weather": state.weather,
-        })
+        try:
+            await _broadcast({
+                "nodes": state.nodes,
+                "diagnostics": state.diagnostics,
+                "gps": state.gps,
+                "weather": state.weather,
+            })
+        except Exception as exc:
+            print(f"[broadcast] error: {exc}")
         await asyncio.sleep(1)
 
 
@@ -46,10 +49,11 @@ async def _diagnostics_loop():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global _weather
-    mqtt = MqttClient()
     gps = GpsReader()
     _weather = WeatherFetcher()
 
+    await broker.start()          # broker must be up before paho tries to connect
+    mqtt = MqttClient()
     mqtt.start()
     gps.start()
 
@@ -61,6 +65,7 @@ async def lifespan(app: FastAPI):
 
     mqtt.stop()
     gps.stop()
+    await broker.stop()
 
 
 app = FastAPI(title="Galena Hub", lifespan=lifespan)

@@ -11,7 +11,7 @@ class Settings(BaseSettings):
 
     weather_lat: float = -22.909135
     weather_lon: float = -47.062301
-    weather_interval: int = 300
+    weather_interval: int = 3000
 
     model_config = {"env_file": ".env"}
 
